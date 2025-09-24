@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/animations/ems_3d_button.dart';
+import 'package:go_router/go_router.dart';
+import 'register_3d_page.dart';
 
 class Login3DPage extends StatefulWidget {
   const Login3DPage({super.key});
@@ -94,7 +96,16 @@ class _Login3DPageState extends State<Login3DPage> with SingleTickerProviderStat
                   EMS3DButton(
                     label: 'Connexion',
                     onTap: () {
-                      Navigator.of(context).pushReplacementNamed('/');
+                      // Redirige vers le dashboard (route '/') avec go_router
+                      context.go('/');
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  EMS3DButton(
+                    label: "S'inscrire",
+                    onTap: () {
+                      // Redirige vers la page d'inscription
+                      context.go('/register');
                     },
                   ),
                 ],
