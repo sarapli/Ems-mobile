@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/animations/ems_3d_button.dart';
+import 'package:go_router/go_router.dart';
+import '../../core/routing/feature_cycle.dart';
 
 class CodeSecretPage extends StatefulWidget {
   final String? role;
@@ -14,9 +16,34 @@ class _CodeSecretPageState extends State<CodeSecretPage> {
   final TextEditingController _codeController = TextEditingController();
   bool _obscure = true;
 
+  // Liste des routes de chaque catégorie dans l'ordre de défilement
+  final List<Map<String, String>> _categoryPages = [
+    {'label': 'CLIENT', 'route': '/client'},
+    {'label': 'AGENT DE GUICHET', 'route': '/agent_guichet'},
+    {'label': 'CHEF D’AGENCE', 'route': '/chef_agence'},
+    {'label': 'COMMERCIAL', 'route': '/commercial'},
+    {'label': 'CONTRÔLEUR', 'route': '/controleur'},
+    {'label': 'COMPTABILITÉ', 'route': '/comptabilite'},
+    {'label': 'ADMINISTRATEUR TECHNIQUE', 'route': '/admin_technique'},
+    {'label': 'ADMINISTRATEUR FONCTIONNEL', 'route': '/admin_fonctionnel'},
+  ];
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Code Secret'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // démarre/continue le cycle depuis la première route définie
+              context.go(FeatureCycle.first());
+            },
+            child: const Text('Go'),
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           Positioned.fill(
@@ -49,7 +76,7 @@ class _CodeSecretPageState extends State<CodeSecretPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      widget.role != null ? widget.role!.toUpperCase() : 'CODE SECRET',
+                      _categoryPages[_currentIndex]['label']!.toUpperCase(),
                       style: const TextStyle(
                         fontFamily: 'Arimo',
                         fontWeight: FontWeight.bold,
@@ -61,7 +88,7 @@ class _CodeSecretPageState extends State<CodeSecretPage> {
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      'Veuillez entrer le code secret de votre catégorie pour accéder à votre espace.',
+                      'Veuillez entrer le code secret de votre catégorie pour accéder à votre espace',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.grey[800], fontSize: 16),
                     ),
@@ -80,17 +107,21 @@ class _CodeSecretPageState extends State<CodeSecretPage> {
                       validator: (value) => value == null || value.isEmpty ? 'Champ requis' : null,
                     ),
                     const SizedBox(height: 32),
-                    EMS3DButton(
-                      label: 'Valider',
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Simuler la validation et la redirection selon le rôle
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Code secret accepté (démo frontend)')),
-                          );
-                          // TODO: Rediriger vers le dashboard de la catégorie
-                        }
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        EMS3DButton(
+                          label: 'Valider',
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Code secret accepté (démo frontend)')),
+                              );
+                            }
+                          },
+                        ),
+                        const SizedBox(width: 24),
+                      ],
                     ),
                   ],
                 ),
