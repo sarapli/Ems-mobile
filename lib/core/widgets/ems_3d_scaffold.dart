@@ -8,6 +8,9 @@ class EMS3DScaffold extends StatelessWidget {
   final Widget body;
   final String? backgroundImageAsset;
   final bool showGo;
+  final List<Widget>? actions;
+  final Widget? titleWidget;
+  final Color? backgroundColor; // when set, use plain color instead of background image + gradient
 
   const EMS3DScaffold({
     super.key,
@@ -16,45 +19,56 @@ class EMS3DScaffold extends StatelessWidget {
     required this.body,
     this.backgroundImageAsset,
     this.showGo = true,
+    this.actions,
+    this.titleWidget,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: backgroundColor == null, // only overlay when using image background
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: backgroundColor ?? Colors.transparent,
         elevation: 0,
-        title: Text(title),
+        title: titleWidget ?? Text(title),
         actions: [
+          ...?actions,
           if (showGo)
-            TextButton(
-              onPressed: () => context.go(FeatureCycle.next(currentRoute)),
-              child: const Text('Go'),
-            )
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: TextButton(
+                onPressed: () => context.go(FeatureCycle.next(currentRoute)),
+                child: const Text('Go'),
+              ),
+            ),
         ],
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: backgroundImageAsset != null
-                ? Image.asset(backgroundImageAsset!, fit: BoxFit.cover)
-                : Container(color: const Color(0xFF0D1B2A)),
-          ),
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.10),
-                    Colors.black.withOpacity(0.40),
-                  ],
+          if (backgroundColor != null)
+            Positioned.fill(child: Container(color: backgroundColor))
+          else ...[
+            Positioned.fill(
+              child: backgroundImageAsset != null
+                  ? Image.asset(backgroundImageAsset!, fit: BoxFit.cover)
+                  : Container(color: const Color(0xFF0D1B2A)),
+            ),
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withValues(alpha: 0.10),
+                      Colors.black.withValues(alpha: 0.40),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

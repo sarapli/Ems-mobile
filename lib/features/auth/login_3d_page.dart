@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/animations/ems_3d_button.dart';
 import 'package:go_router/go_router.dart';
-import 'register_3d_page.dart';
 
 class Login3DPage extends StatefulWidget {
   const Login3DPage({super.key});
@@ -36,8 +35,8 @@ class _Login3DPageState extends State<Login3DPage> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.15),
-                    Colors.black.withOpacity(0.45),
+                    Colors.black.withValues(alpha: 0.15),
+                    Colors.black.withValues(alpha: 0.45),
                   ],
                 ),
               ),
@@ -48,11 +47,11 @@ class _Login3DPageState extends State<Login3DPage> {
               constraints: const BoxConstraints(maxWidth: 480),
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.90),
+                color: Colors.white.withValues(alpha: 0.90),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 30,
                     offset: const Offset(0, 12),
                   ),

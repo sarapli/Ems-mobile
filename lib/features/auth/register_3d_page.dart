@@ -50,8 +50,8 @@ class _Register3DPageState extends State<Register3DPage> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.15),
-                    Colors.black.withOpacity(0.45),
+                    Colors.black.withValues(alpha: 0.15),
+                    Colors.black.withValues(alpha: 0.45),
                   ],
                 ),
               ),
@@ -64,11 +64,11 @@ class _Register3DPageState extends State<Register3DPage> {
                 padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 36),
                 margin: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.98),
+                  color: Colors.white.withValues(alpha: 0.98),
                   borderRadius: BorderRadius.circular(32),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.10),
+                      color: Colors.black.withValues(alpha: 0.10),
                       blurRadius: 40,
                       offset: const Offset(0, 16),
                     ),
@@ -152,7 +152,7 @@ class _Register3DPageState extends State<Register3DPage> {
                       ),
                       const SizedBox(height: 18),
                       DropdownButtonFormField<String>(
-                        value: _selectedCategory,
+                        initialValue: _selectedCategory,
                         decoration: InputDecoration(
                           labelText: 'Catégorie',
                           prefixIcon: const Icon(Icons.category_outlined, color: Color(0xFF0033A0)),
@@ -199,22 +199,3 @@ class _Register3DPageState extends State<Register3DPage> {
   }
 }
 
-class _ParticlePainter extends CustomPainter {
-  final double progress;
-  _ParticlePainter(this.progress);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = const Color(0xFF0033A0).withOpacity(0.12)
-      ..style = PaintingStyle.fill;
-    for (int i = 0; i < 18; i++) {
-      final dx = size.width * (i / 18.0);
-      final dy = size.height * (0.4 + 0.2 * (progress + i % 3));
-      canvas.drawCircle(Offset(dx, dy), 18 + 8 * (progress), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _ParticlePainter oldDelegate) => true;
-}

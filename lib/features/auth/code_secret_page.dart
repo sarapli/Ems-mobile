@@ -27,7 +27,7 @@ class _CodeSecretPageState extends State<CodeSecretPage> {
     {'label': 'ADMINISTRATEUR TECHNIQUE', 'route': '/admin_technique'},
     {'label': 'ADMINISTRATEUR FONCTIONNEL', 'route': '/admin_fonctionnel'},
   ];
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _CodeSecretPageState extends State<CodeSecretPage> {
               'image/backround_code_secret.png',
               fit: BoxFit.cover,
               colorBlendMode: BlendMode.darken,
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withValues(alpha: 0.5),
             ),
           ),
           Center(
@@ -59,11 +59,11 @@ class _CodeSecretPageState extends State<CodeSecretPage> {
               padding: const EdgeInsets.all(32),
               margin: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.90),
+                color: Colors.white.withValues(alpha: 0.90),
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.10),
+                    color: Colors.black.withValues(alpha: 0.10),
                     blurRadius: 32,
                     offset: const Offset(0, 12),
                   ),

@@ -5,6 +5,7 @@ class EMSFeatureTile extends StatelessWidget {
   final String title;
   final String? subtitle;
   final VoidCallback? onTap;
+  final bool showIcon;
 
   const EMSFeatureTile({
     super.key,
@@ -12,6 +13,7 @@ class EMSFeatureTile extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.onTap,
+    this.showIcon = true,
   });
 
   @override
@@ -28,7 +30,7 @@ class EMSFeatureTile extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.12),
+              color: Colors.black.withValues(alpha: 0.12),
               offset: const Offset(0, 10),
               blurRadius: 20,
             ),
@@ -39,15 +41,19 @@ class EMSFeatureTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF0033A0).withOpacity(0.10),
-                shape: BoxShape.circle,
+            if (showIcon) ...[
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF0033A0).withValues(alpha: 0.10),
+                  shape: BoxShape.circle,
+                ),
+                padding: const EdgeInsets.all(12),
+                child: Icon(icon, color: const Color(0xFF0033A0), size: 28),
               ),
-              padding: const EdgeInsets.all(12),
-              child: Icon(icon, color: const Color(0xFF0033A0), size: 28),
-            ),
-            const Spacer(),
+              const Spacer(),
+            ] else ...[
+              const SizedBox(height: 4),
+            ],
             Text(
               title,
               style: const TextStyle(

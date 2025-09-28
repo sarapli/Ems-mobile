@@ -9,23 +9,7 @@ class ProfessionalCapture3DPage extends StatefulWidget {
   State<ProfessionalCapture3DPage> createState() => _ProfessionalCapture3DPageState();
 }
 
-class _ProfessionalCapture3DPageState extends State<ProfessionalCapture3DPage> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat(reverse: true);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class _ProfessionalCapture3DPageState extends State<ProfessionalCapture3DPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -53,30 +37,21 @@ class _ProfessionalCapture3DPageState extends State<ProfessionalCapture3DPage> w
           ],
         ),
         elevation: 8,
-        shadowColor: Colors.black.withOpacity(0.2),
+        shadowColor: Colors.black.withValues(alpha: 0.2),
       ),
       body: Stack(
         children: [
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return CustomPaint(
-                painter: _ParticlePainter(_controller.value),
-                child: Container(),
-              );
-            },
-          ),
           Center(
             child: SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.all(32),
                 margin: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.92),
+                  color: Colors.white.withValues(alpha: 0.92),
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.10),
+                      color: Colors.black.withValues(alpha: 0.10),
                       blurRadius: 32,
                       offset: const Offset(0, 12),
                     ),
@@ -242,22 +217,3 @@ class _ProfessionalCapture3DPageState extends State<ProfessionalCapture3DPage> w
   }
 }
 
-class _ParticlePainter extends CustomPainter {
-  final double progress;
-  _ParticlePainter(this.progress);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = const Color(0xFF0033A0).withOpacity(0.10)
-      ..style = PaintingStyle.fill;
-    for (int i = 0; i < 18; i++) {
-      final dx = size.width * (i / 18.0);
-      final dy = size.height * (0.4 + 0.2 * (progress + i % 3));
-      canvas.drawCircle(Offset(dx, dy), 18 + 8 * (progress), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _ParticlePainter oldDelegate) => true;
-}
