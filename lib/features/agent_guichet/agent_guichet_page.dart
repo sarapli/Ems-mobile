@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/widgets/ems_3d_scaffold.dart';
 
 class AgentGuichetPage extends StatelessWidget {
@@ -30,7 +31,7 @@ class AgentGuichetPage extends StatelessWidget {
           _Logo(),
           const SizedBox(width: 12),
           const Text(
-            'Tableau de Bord',
+            'Agent_Guichet',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
@@ -103,7 +104,12 @@ class AgentGuichetPage extends StatelessWidget {
                         separatorBuilder: (_, __) => const SizedBox(height: 6),
                         itemBuilder: (context, index) {
                           final item = sidebarItems[index];
-                          return _SidebarTile(icon: item.$1, label: item.$2);
+                          VoidCallback? onTap;
+                          if (index == 0) {
+                            // Saisie des envois -> navigate to SaisieEnvoisPage
+                            onTap = () => context.go('/agent_guichet/saisie_envois');
+                          }
+                          return _SidebarTile(icon: item.$1, label: item.$2, onTap: onTap);
                         },
                       ),
                     ),
@@ -179,14 +185,15 @@ class _ActionIcon extends StatelessWidget {
 class _SidebarTile extends StatelessWidget {
   final _SidebarIcon icon;
   final String label;
+  final VoidCallback? onTap;
 
-  const _SidebarTile({required this.icon, required this.label});
+  const _SidebarTile({required this.icon, required this.label, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () {},
+      onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         child: Row(

@@ -6,6 +6,7 @@ import '../../features/auth/register_3d_page.dart';
 import '../../features/auth/code_secret_page.dart';
 import '../../features/client/client_page.dart';
 import '../../features/agent_guichet/agent_guichet_page.dart';
+import '../../features/agent_guichet/saisie_envois_page.dart';
 import '../../features/chef_agence/chef_agence_page.dart';
 import '../../features/commercial/commercial_page.dart';
 import '../../features/controleur/controleur_page.dart';
@@ -42,6 +43,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AgentGuichetPage.routePath,
       builder: (context, state) => const AgentGuichetPage(),
+    ),
+    GoRoute(
+      path: SaisieEnvoisPage.routePath,
+      builder: (context, state) => const SaisieEnvoisPage(),
     ),
     GoRoute(
       path: ChefAgencePage.routePath,
