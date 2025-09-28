@@ -12,6 +12,16 @@ class FacturationPage extends StatelessWidget {
     final title = FeatureCycle.labelOf(routePath);
     final width = MediaQuery.of(context).size.width;
     final crossAxisCount = width > 1200 ? 4 : width > 900 ? 3 : width > 600 ? 2 : 1;
+    
+    // Sidebar items (converted from previous grid tiles)
+    final sidebarItems = <_SidebarEntry>[
+      _SidebarEntry(_SidebarIcon(icon: Icons.receipt_long_outlined, color: const Color(0xFF2E5BFF)), 'Factures clients'),
+      _SidebarEntry(_SidebarIcon(icon: Icons.request_quote_outlined, color: const Color(0xFF23A566)), 'Devis (pro forma)'),
+      _SidebarEntry(_SidebarIcon(icon: Icons.attach_money_outlined, color: const Color(0xFF7A5AF8)), 'Encaissements'),
+      _SidebarEntry(_SidebarIcon(icon: Icons.money_off_csred_outlined, color: const Color(0xFFFF6B35)), 'Décaissements'),
+      _SidebarEntry(_SidebarIcon(icon: Icons.list_alt_outlined, color: const Color(0xFF0EA5E9)), 'Brouillard de caisse'),
+      _SidebarEntry(_SidebarIcon(icon: Icons.local_shipping_outlined, color: const Color(0xFFEC4899)), 'Groupage maritime'),
+    ];
 
     return EMS3DScaffold(
       title: '',
@@ -58,45 +68,73 @@ class FacturationPage extends StatelessWidget {
         CircleAvatar(radius: 18, backgroundColor: Color(0xFFE5ECFF), child: Icon(Icons.person, color: Color(0xFF1F2937))),
         SizedBox(width: 8),
       ],
-      body: GridView.count(
-        crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        children: const [
-          EMSFeatureTile(
-            icon: Icons.receipt_long_outlined,
-            title: 'Factures clients',
-            subtitle: 'Émission et impression des factures',
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: 220, maxWidth: 260),
+            child: Card(
+              elevation: 0,
+              color: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Tableau de bord', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+                    const SizedBox(height: 12),
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: sidebarItems.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 6),
+                        itemBuilder: (context, index) {
+                          final item = sidebarItems[index];
+                          return _SidebarTile(icon: item.icon, label: item.label);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-          EMSFeatureTile(
-            icon: Icons.request_quote_outlined,
-            title: 'Devis (pro forma)',
-            subtitle: 'Établir un devis',
-          ),
-          EMSFeatureTile(
-            icon: Icons.attach_money_outlined,
-            title: 'Encaissements',
-            subtitle: 'Enregistrer les paiements',
-          ),
-          EMSFeatureTile(
-            icon: Icons.money_off_csred_outlined,
-            title: 'Décaissements',
-            subtitle: 'Enregistrer les sorties de caisse',
-          ),
-          EMSFeatureTile(
-            icon: Icons.list_alt_outlined,
-            title: 'Brouillard de caisse',
-            subtitle: 'Édition et suivi',
-          ),
-          EMSFeatureTile(
-            icon: Icons.local_shipping_outlined,
-            title: 'Groupage maritime',
-            subtitle: 'Paiement envois reçus par groupage',
-          ),
+          const SizedBox(width: 16),
+          const Expanded(child: SizedBox.shrink()),
         ],
       ),
     );
   }
+}
+
+class _SidebarEntry {
+  final _SidebarIcon icon;
+  final String label;
+  const _SidebarEntry(this.icon, this.label);
+}
+
+class _SidebarTile extends StatelessWidget {
+  final _SidebarIcon icon;
+  final String label;
+  const _SidebarTile({required this.icon, required this.label});
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        child: Row(children: [icon, const SizedBox(width: 12), Expanded(child: Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)))]),
+      );
+}
+
+class _SidebarIcon extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  const _SidebarIcon({required this.icon, required this.color});
+  @override
+  Widget build(BuildContext context) => Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(color: color.withValues(alpha: 0.10), borderRadius: BorderRadius.circular(10)),
+        child: Icon(icon, color: color),
+      );
 }
 
 class _Logo extends StatelessWidget {
