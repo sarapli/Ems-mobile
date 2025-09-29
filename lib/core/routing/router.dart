@@ -7,6 +7,12 @@ import '../../features/auth/code_secret_page.dart';
 import '../../features/client/client_page.dart';
 import '../../features/agent_guichet/agent_guichet_page.dart';
 import '../../features/agent_guichet/saisie_envois_page.dart';
+import '../../features/agent_guichet/impression_bordereaux_page.dart';
+import '../../features/agent_guichet/transmission_envois_page.dart';
+import '../../features/agent_guichet/fermeture_depeches_page.dart';
+import '../../features/agent_guichet/reception_depeches_page.dart';
+import '../../features/agent_guichet/reception_envois_page.dart';
+import '../../features/agent_guichet/mise_a_jour_statuts_page.dart';
 import '../../features/chef_agence/chef_agence_page.dart';
 import '../../features/commercial/commercial_page.dart';
 import '../../features/controleur/controleur_page.dart';
@@ -47,6 +53,30 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: SaisieEnvoisPage.routePath,
       builder: (context, state) => const SaisieEnvoisPage(),
+    ),
+    GoRoute(
+      path: ImpressionBordereauxPage.routePath,
+      builder: (context, state) => const ImpressionBordereauxPage(),
+    ),
+    GoRoute(
+      path: TransmissionEnvoisPage.routePath,
+      builder: (context, state) => const TransmissionEnvoisPage(),
+    ),
+    GoRoute(
+      path: FermetureDepechesPage.routePath,
+      builder: (context, state) => const FermetureDepechesPage(),
+    ),
+    GoRoute(
+      path: ReceptionDepechesPage.routePath,
+      builder: (context, state) => const ReceptionDepechesPage(),
+    ),
+    GoRoute(
+      path: ReceptionEnvoisPage.routePath,
+      builder: (context, state) => const ReceptionEnvoisPage(),
+    ),
+    GoRoute(
+      path: MiseAJourStatutsPage.routePath,
+      builder: (context, state) => const MiseAJourStatutsPage(),
     ),
     GoRoute(
       path: ChefAgencePage.routePath,

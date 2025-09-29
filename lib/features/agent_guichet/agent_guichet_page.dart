@@ -106,8 +106,20 @@ class AgentGuichetPage extends StatelessWidget {
                           final item = sidebarItems[index];
                           VoidCallback? onTap;
                           if (index == 0) {
-                            // Saisie des envois -> navigate to SaisieEnvoisPage
+                            // Saisie des envois
                             onTap = () => context.go('/agent_guichet/saisie_envois');
+                          } else if (index == 1) {
+                            onTap = () => context.go('/agent_guichet/impression_bordereaux');
+                          } else if (index == 2) {
+                            onTap = () => context.go('/agent_guichet/transmission_envois');
+                          } else if (index == 3) {
+                            onTap = () => context.go('/agent_guichet/fermeture_depeches');
+                          } else if (index == 4) {
+                            onTap = () => context.go('/agent_guichet/reception_depeches');
+                          } else if (index == 5) {
+                            onTap = () => context.go('/agent_guichet/reception_envois');
+                          } else if (index == 6) {
+                            onTap = () => context.go('/agent_guichet/mise_a_jour_statuts');
                           }
                           return _SidebarTile(icon: item.$1, label: item.$2, onTap: onTap);
                         },
